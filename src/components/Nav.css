@@ -1,0 +1,18 @@
+.nav-item {
+  width: 33%;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.nav {
+  border-top: 1px solid lightgray;
+  width: 100%;
+}
+
+.item-inactive {
+  color: #73d2de;
+}
+
+.item-active {
+  color: #0b132b;
+}

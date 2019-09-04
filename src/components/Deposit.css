@@ -1,0 +1,41 @@
+.deposit {
+  color: #73d2de;
+  padding: 0px 28px;
+  flex: 0 1 auto;
+}
+
+.headline {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.no-background-input {
+  background: #3a506b;
+  border-bottom: 1px solid #1c2541 !important;
+  color: #73d2de;
+  font-size: 12px;
+}
+
+input,
+input:focus {
+  outline: none;
+  border: none;
+  padding: 3px;
+}
+
+input::placeholder {
+  color: #73d2de;
+  font-size: 12px;
+}
+
+.balance-headline {
+  font-weight: bold;
+  font-size: 12px;
+  color: #73d2de;
+}
+
+.balance-value {
+  font-size: 16px;
+  color: #0B132B;
+  font-weight: bold;
+}
