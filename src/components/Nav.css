@@ -1,12 +1,13 @@
 .nav-item {
-  width: 33%;
+  width: 25%;
   font-weight: bold;
   cursor: pointer;
 }
 
 .nav {
   border-top: 1px solid lightgray;
-  width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 }
 
 .item-inactive {

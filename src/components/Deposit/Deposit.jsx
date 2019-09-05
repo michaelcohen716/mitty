@@ -1,49 +1,19 @@
-import React, { useState, useEffect } from "react";
-import SubmitButton from "./common/SubmitButton";
-import MiniLoading from "./common/MiniLoading";
-
-import {
-  _getAccountFromPrivateKey,
-  _getMainnetBalance,
-  _getMainnetERC20Balance
-} from "../services/web3";
-import { _depositERC20, _getMaticERC20Balance } from "../services/matic";
+import React, { useState } from "react";
+import SubmitButton from "../common/SubmitButton";
+import MiniLoading from "../common/MiniLoading";
+import { _depositERC20 } from "../../services/matic";
 import "./Deposit.css";
 
-function Deposit() {
-  const [privateKey, setPrivateKey] = useState(
-    process.env.REACT_APP_TEST_PK1
-  );
-  const [address, setAddress] = useState("");
-  //   const [privateKey, setPrivateKey] = useState("");
-  const [accountLoaded, toggleAccountLoaded] = useState(false);
-
-  const [mainnetERC20Balance, setMainnetERC20Balance] = useState(null);
-  const [maticERC20Balance, setMaticERC20Balance] = useState(null);
-
+function Deposit({
+  privateKey,
+  pollMaticBalance,
+  mainnetERC20Balance,
+  maticERC20Balance,
+  getMainnetERC20Balance,
+  address
+}) {
   const [depositAmount, setDepositAmount] = useState("");
   const [txProcessing, toggleTxProcessing] = useState(false);
-
-  const getAccountFromPrivateKey = async () => {
-    const pk = privateKey;
-    const account = await _getAccountFromPrivateKey(pk);
-    setAddress(account.address);
-    await getMainnetERC20Balance(account.address);
-    await getMaticERC20Balance(pk);
-
-    toggleAccountLoaded(true);
-  };
-
-  const getMainnetERC20Balance = async address => {
-    const mainnetTokenAddr = "0x70459e550254b9d3520a56ee95b78ee4f2dbd846"; //rops
-    const bal = await _getMainnetERC20Balance(mainnetTokenAddr, address);
-    setMainnetERC20Balance(bal);
-  };
-
-  const getMaticERC20Balance = async pk => {
-    const bal = await _getMaticERC20Balance(pk);
-    setMaticERC20Balance(bal);
-  };
 
   const depositERC20 = async () => {
     toggleTxProcessing(true);
@@ -58,12 +28,6 @@ function Deposit() {
     toggleTxProcessing(false);
   };
 
-  const pollMaticBalance = async () => {
-    setInterval(async () => {
-      await getMaticERC20Balance(privateKey);
-    }, 1000);
-  };
-
   const isDepositDisabled = () => {
     if (Number(depositAmount) > mainnetERC20Balance / 10 ** 18) {
       return true;
@@ -76,22 +40,9 @@ function Deposit() {
     }
   };
 
-  console.log("isdepositdisable", isDepositDisabled());
-
   return (
     <div className="d-flex flex-column deposit justify-content-start">
       <div className="headline mb-3">Deposit Funds from Ethereum</div>
-      {!accountLoaded ? (
-        <div className="d-flex flex-column">
-          <input
-            value={privateKey}
-            onChange={e => setPrivateKey(e.target.value)}
-            className="no-background-input mb-3"
-            placeholder="Enter private key"
-          />
-          <SubmitButton onClick={getAccountFromPrivateKey} />
-        </div>
-      ) : (
         <div className="d-flex flex-column mt-2">
           <div className="d-flex flex-column">
             <div className="balance-headline">Mainnet Bal</div>
@@ -125,7 +76,6 @@ function Deposit() {
             />
           )}
         </div>
-      )}
     </div>
   );
 }
