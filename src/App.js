@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Deposit from "./components/Deposit/Deposit";
-import "./App.css";
+import Transfer from "./components/Transfer/Transfer";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import paymentLogo from "./assets/payment-icon.png";
 import {
@@ -10,6 +10,7 @@ import {
   _getMainnetERC20Balance
 } from "./services/web3";
 import { _getMaticERC20Balance } from "./services/matic";
+import "./App.css";
 
 const tabs = ["Home", "Deposit", "Transfer", "Withdraw"];
 
@@ -17,6 +18,15 @@ const tabs = ["Home", "Deposit", "Transfer", "Withdraw"];
 Noun Project Credits
 - payment By Sergey Demushkin, RU   
 */
+
+let vh = window.innerHeight * 0.01;
+// Then we set the value in the --vh custom property to the root of the document
+document.documentElement.style.setProperty("--vh", `${vh}px`);
+
+// window.addEventListener('resize', () => {
+//   let vh = window.innerHeight * 0.01;
+//   document.documentElement.style.setProperty('--vh', `${vh}px`);
+// });
 
 function App() {
   const { height, width } = useWindowDimensions();
@@ -57,7 +67,14 @@ function App() {
         );
       }
       case tabs[2]: {
-        return <div>Transfer</div>;
+        return (
+          <Transfer
+            privateKey={privateKey}
+            maticERC20Balance={maticERC20Balance}
+            mainnetERC20Balance={mainnetERC20Balance}
+            pollMaticBalance={pollMaticBalance}
+          />
+        );
       }
       case tabs[3]: {
         return <div>Withdraw</div>;
@@ -65,7 +82,7 @@ function App() {
     }
   };
 
-  const receivePrivateKey = async() => {
+  const receivePrivateKey = async () => {
     const account = await _getAccountFromPrivateKey(privateKey);
     setAddress(account.address);
     await getMainnetERC20Balance(account.address);
@@ -96,8 +113,7 @@ function App() {
       style={{
         maxWidth: "414px",
         width,
-        minHeight: height,
-        maxHeight: height
+        height
       }}
     >
       <div className="d-flex flex-column">

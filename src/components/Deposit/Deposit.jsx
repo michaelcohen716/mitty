@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import SubmitButton from "../common/SubmitButton";
+import Balances from "../common/Balances";
 import MiniLoading from "../common/MiniLoading";
 import { _depositERC20 } from "../../services/matic";
 import "./Deposit.css";
@@ -43,39 +44,30 @@ function Deposit({
   return (
     <div className="d-flex flex-column deposit justify-content-start">
       <div className="headline mb-3">Deposit Funds from Ethereum</div>
-        <div className="d-flex flex-column mt-2">
-          <div className="d-flex flex-column">
-            <div className="balance-headline">Mainnet Bal</div>
-            <div className="balance-value">
-              {mainnetERC20Balance / 10 ** 18} Dai
-            </div>
-          </div>
-          <div className="d-flex flex-column mt-2">
-            <div className="balance-headline">Matic Bal</div>
-            <div className="balance-value">
-              {maticERC20Balance / 10 ** 18} Dai
-            </div>
-          </div>
-
-          <div className="mt-4 headline">
-            How much Dai would you like to deposit to Matic?
-          </div>
-          <input
-            value={depositAmount}
-            onChange={e => setDepositAmount(e.target.value)}
-            className="no-background-input my-3"
-            placeholder="Deposit amount"
-          />
-          {txProcessing ? (
-            <MiniLoading />
-          ) : (
-            <SubmitButton
-              onClick={depositERC20}
-              disabled={isDepositDisabled()}
-              className="mt-1 mb-4"
-            />
-          )}
+      <div className="d-flex flex-column mt-2">
+        <Balances
+          maticERC20Balance={maticERC20Balance}
+          mainnetERC20Balance={mainnetERC20Balance}
+        />
+        <div className="mt-4 headline">
+          How much Dai would you like to deposit to Matic?
         </div>
+        <input
+          value={depositAmount}
+          onChange={e => setDepositAmount(e.target.value)}
+          className="no-background-input my-3"
+          placeholder="Deposit amount"
+        />
+        {txProcessing ? (
+          <MiniLoading />
+        ) : (
+          <SubmitButton
+            onClick={depositERC20}
+            disabled={isDepositDisabled()}
+            className="mt-1 mb-4"
+          />
+        )}
+      </div>
     </div>
   );
 }
