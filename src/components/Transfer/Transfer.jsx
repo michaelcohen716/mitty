@@ -10,6 +10,7 @@ function Transfer({ maticERC20Balance, pollMaticBalance, privateKey }) {
   const [transferAmount, setTransferAmount] = useState("");
 
   const [txProcessing, toggleTxProcessing] = useState(false);
+  const [txSuccess, toggleTxSuccess] = useState(false);
 
   const transfer = async () => {
     toggleTxProcessing(true);
@@ -19,6 +20,11 @@ function Transfer({ maticERC20Balance, pollMaticBalance, privateKey }) {
     console.log("deposit return value", retVal);
 
     pollMaticBalance();
+
+    toggleTxSuccess(true);
+    setInterval(() => {
+      toggleTxSuccess(false);
+    }, 3000);
     toggleTxProcessing(false);
   };
 
@@ -55,6 +61,8 @@ function Transfer({ maticERC20Balance, pollMaticBalance, privateKey }) {
           <div className="py-4">
             <MiniLoading />
           </div>
+        ) : txSuccess ? (
+          <div className="mt-3 success-text">Transaction Successful!</div>
         ) : (
           <SubmitButton
             onClick={transfer}

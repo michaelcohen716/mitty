@@ -15,6 +15,7 @@ function Deposit({
 }) {
   const [depositAmount, setDepositAmount] = useState("");
   const [txProcessing, toggleTxProcessing] = useState(false);
+  const [txSuccess, toggleTxSuccess] = useState(false);
 
   const depositERC20 = async () => {
     toggleTxProcessing(true);
@@ -26,6 +27,10 @@ function Deposit({
     await getMainnetERC20Balance(address);
     pollMaticBalance();
 
+    toggleTxSuccess(true);
+    setInterval(() => {
+      toggleTxSuccess(false);
+    }, 3000);
     toggleTxProcessing(false);
   };
 
@@ -60,12 +65,16 @@ function Deposit({
         />
         {txProcessing ? (
           <MiniLoading />
+        ) : txSuccess ? (
+          <div className="mt-3 success-text">Transaction Successful!</div>
         ) : (
-          <SubmitButton
-            onClick={depositERC20}
-            disabled={isDepositDisabled()}
-            className="mt-1 mb-4"
-          />
+          <div className="pb-5">
+            <SubmitButton
+              onClick={depositERC20}
+              disabled={isDepositDisabled()}
+              className="mt-1 mb-4"
+            />
+          </div>
         )}
       </div>
     </div>
