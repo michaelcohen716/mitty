@@ -32,17 +32,4 @@ export const _getMainnetERC20Balance = async (tokenAddr, userAddr) => {
   );
   const ropstenBalance = await ropstenContract.balanceOf(userAddr);
   return ropstenBalance.toString();
-  // try {
-  //     const mainContract = new ethers.Contract(addr, ERC20ABI, web3RopstenProvider);
-  //     const mainName = await mainContract.name().catch();
-  //     return mainName;
-  // } catch {
-  //     const rinkContract = new ethers.Contract(
-  //         addr,
-  //         ERC20ABI,
-  //         web3RinkebyProvider
-  //     );
-  //     const rinkName = await rinkContract.symbol().catch();
-  //     return rinkName;
-  // }
 };

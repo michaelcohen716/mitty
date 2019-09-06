@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Nav from "./components/Nav";
 import Home from "./components/Home";
 import Deposit from "./components/Deposit/Deposit";
 import Transfer from "./components/Transfer/Transfer";
+import Wire from "./components/Wire/Wire";
 import useWindowDimensions from "./hooks/useWindowDimensions";
 import paymentLogo from "./assets/payment-icon.png";
 import {
@@ -12,7 +13,7 @@ import {
 import { _getMaticERC20Balance } from "./services/matic";
 import "./App.css";
 
-const tabs = ["Home", "Deposit", "Transfer", "Withdraw"];
+const tabs = ["Home", "Deposit", "Transfer", "Wire"];
 
 /* 
 Noun Project Credits
@@ -77,7 +78,13 @@ function App() {
         );
       }
       case tabs[3]: {
-        return <div>Withdraw</div>;
+        return (
+          <Wire
+            maticERC20Balance={maticERC20Balance}
+            mainnetERC20Balance={mainnetERC20Balance}
+            address={address}
+          />
+        );
       }
     }
   };

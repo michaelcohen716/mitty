@@ -12,6 +12,9 @@ const matic = new Matic({
 
 const token = "0x70459e550254b9d3520a56ee95b78ee4f2dbd846";
 const maticTestToken = "0xc82c13004c06E4c627cF2518612A55CE7a3Db699";
+
+// const token = "0x670568761764f53E6C10cd63b71024c31551c9EC" 
+
 // const from = "0xcC4c3FBfA2716D74B3ED6514ca8Ba99d7f941dF9";
 // const amount = "10000000000000000";
 // const amount = "1000000000000000000000";
@@ -20,6 +23,10 @@ const maticTestToken = "0xc82c13004c06E4c627cF2518612A55CE7a3Db699";
 const getFromAdddress = async(pk) => {
   const account = await _getAccountFromPrivateKey(pk);
   return account.address;
+}
+
+export const getMappedAddress = async(addr) => {
+  return matic.getMappedTokenAddress(token)
 }
 
 export const deposit = async (pk, amount) => {
@@ -54,6 +61,7 @@ export const _depositERC20 = async(pk, amount) => {
         }
       });
     });
+
 };
 
 export const _transferERC20 = async(pk, amount, recipient) => {

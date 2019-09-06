@@ -68,11 +68,11 @@ function Deposit({
         ) : txSuccess ? (
           <div className="mt-3 success-text">Transaction Successful!</div>
         ) : (
-          <div className="pb-5">
+          <div className="pb-5 mb-5">
             <SubmitButton
               onClick={depositERC20}
               disabled={isDepositDisabled()}
-              className="mt-1 mb-4"
+              className="mt-1 mb-4 pb-5"
             />
           </div>
         )}
