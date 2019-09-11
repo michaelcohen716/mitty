@@ -1,12 +1,16 @@
 .nav-item {
-  width: 33%;
+  width: 25%;
   font-weight: bold;
   cursor: pointer;
 }
 
 .nav {
+  min-height: 6%;
+  max-height: 6%;
+  border: 1px solid magenta;
   border-top: 1px solid lightgray;
-  width: 100%;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
 }
 
 .item-inactive {
@@ -15,4 +19,8 @@
 
 .item-active {
   color: #0b132b;
+}
+
+.item-disabled {
+  color: rgba(211, 211, 211, 0.651);
 }

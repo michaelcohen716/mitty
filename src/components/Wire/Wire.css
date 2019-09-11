@@ -1,0 +1,14 @@
+.moonpay-note {
+  color: #eeba0b;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.wire-subheader {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.tx-link {
+  font-size: 10px;
+}

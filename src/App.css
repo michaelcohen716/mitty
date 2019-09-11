@@ -1,7 +1,7 @@
 .App {
-  border: 1px solid orange;
   margin: auto;
-  min-height: 100vh;
+  height: 100vh; 
+  height: calc(var(--vh, 1vh) * 100);
   background: #3A506B;
 }
 
@@ -24,7 +24,7 @@
   font-size: 34px;
   font-weight: bold;
   color:#73d2de;
-  height: 100px;
+  height: 10%;
 }
 
 .payment-logo {
@@ -33,7 +33,6 @@
 
 .main-body {
   overflow-y: scroll;
-  padding-bottom: 12px;
 }
 
 
