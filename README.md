@@ -64,7 +64,7 @@ And there it is. On your Home screen, just like any other app.
 
 Mitty v1 prioritizes privacy. We don't store any account or user information. In future versions, we may add wallet managers like Portis, Torus or Fortmatic, but right now, you'll need to enter your private key - only stored client-side - to begin using Mitty.
 
-* Enter your private key to access the app (Mitty is only deployed on Ropsten, so we've incldued a preloaded test account to play around with)
+* Enter your private key to access the app (Mitty is only deployed on Ropsten, so we've included a preloaded test account to play around with if you'd like)
 
 Your home page simply displays your mainnet and Matic Dai balances.
 > Note: Given that this is a Ropsten deployment of Mitty, the [TTT Matic test token](https://ropsten.etherscan.io/token/0x70459e550254B9D3520a56eE95b78Ee4f2dbd846) is the substitute ERC20, used in place of Dai for testing purposes.
