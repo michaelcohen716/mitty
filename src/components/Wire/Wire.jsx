@@ -94,7 +94,7 @@ function Wire({
   };
 
   const copyAddress = () => {
-    navigator.clipboard.copy(address);
+    navigator.clipboard.writeText(address);
   };
 
   const uniswapApproveERC20 = async () => {
