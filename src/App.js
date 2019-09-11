@@ -82,6 +82,7 @@ function App() {
           <Wire
             maticERC20Balance={maticERC20Balance}
             mainnetERC20Balance={mainnetERC20Balance}
+            getMainnetERC20Balance={getMainnetERC20Balance}
             address={address}
           />
         );

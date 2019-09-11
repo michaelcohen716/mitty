@@ -3,3 +3,19 @@
   padding: 0px 28px;
   flex: 0 1 auto;
 }
+
+.home-text {
+  color: #EEBA0B;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.home-text > div {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.enter-text {
+  color: #73d2de;
+  font-weight: bold !important;
+}

@@ -15,18 +15,23 @@ import {
   getToken,
   addLiquidity,
   ethForTestToken,
-  getEthToTokenInputPrice
+  getEthToTokenInputPrice,
+  ExchangeContract,
+  TokenContract,
+  ROPSTEN_TTT_UNISWAP_EXCHANGE
 } from "../../services/uniswap";
-import {
-  tradeExactEthForTokens,
-  getExecutionDetails,
-  getTokenReserves
-} from "@uniswap/sdk";
 import "./Wire.css";
 
-function Wire({ mainnetERC20Balance, maticERC20Balance, address }) {
+function Wire({
+  mainnetERC20Balance,
+  maticERC20Balance,
+  address,
+  getMainnetERC20Balance
+}) {
   const [mainnetETHBalance, setMainnetETHBalance] = useState("");
   const [exchangeAmount, setExchangeAmount] = useState("");
+
+  const [txHash, setTxHash] = useState("");
 
   const [txProcessing, toggleTxProcessing] = useState(false);
   const [txSuccess, toggleTxSuccess] = useState(false);
@@ -37,22 +42,26 @@ function Wire({ mainnetERC20Balance, maticERC20Balance, address }) {
       console.log("mainnet eth bal", bal);
       setMainnetETHBalance(bal);
 
-      await getEthToTokenInputPrice(0.02)
-
-      // await getTokenCount();
-      // await getToken();
-      // const reserves = await getTokenReserves(
-      //   "0x70459e550254b9d3520a56ee95b78ee4f2dbd846"
-      // );
-      // console.log("Reserves", reserves);
+      await getEthToTokenInputPrice(0.02);
     };
     getMainnetEthBalance();
+    pollBalances();
   }, []);
 
   const exchangeWithUniswap = async () => {
+    toggleTxProcessing(true);
     const amount = exchangeAmount;
     const retVal = await ethForTestToken(amount);
-    console.log("Retval", retVal);
+    pollBalances();
+  };
+
+  const pollBalances = async () => {
+    setInterval(async () => {
+      const bal = await _getMainnetETHBalance(address);
+      setMainnetETHBalance(bal);
+
+      getMainnetERC20Balance(address);
+    }, 2000);
   };
 
   const isExchangeDisabled = () => {
@@ -71,7 +80,8 @@ function Wire({ mainnetERC20Balance, maticERC20Balance, address }) {
     <ViewHolder headlineText="Wire Funds to Ethereum">
       <div className="moonpay-note mb-3">
         Note: The Moonpay test environment doesn't support Dai, so we'll need to
-        buy ETH with Moonpay and exchange for Dai on Uniswap below
+        buy ETH with Moonpay and exchange for Dai on Uniswap below. Allow
+        several minutes for the Uniswap exchange to register in your balance.
       </div>
 
       <Balances
@@ -90,7 +100,7 @@ function Wire({ mainnetERC20Balance, maticERC20Balance, address }) {
       <div className="wire-subheader mt-4 mb-2">Exchange with Uniswap</div>
       <div className="mt-2">
         <div className="balance-headline">Mainnet ETH Bal</div>
-        <div className="balance-value">{mainnetETHBalance.slice(0, 4)} ETH</div>
+        <div className="balance-value">{mainnetETHBalance.slice(0, 5)} ETH</div>
       </div>
 
       <GeneralInput
@@ -99,7 +109,13 @@ function Wire({ mainnetERC20Balance, maticERC20Balance, address }) {
         placeholder="Amount to Exchange"
       />
       {txProcessing ? (
-        <MiniLoading />
+        <div className="d-flex flex-column">
+          <MiniLoading />
+        </div>
+      ) : txSuccess ? (
+        <div className="mt-3 success-text">
+          Your updated balance should be reflected shortly
+        </div>
       ) : (
         <SubmitButton
           onClick={exchangeWithUniswap}

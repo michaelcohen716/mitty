@@ -7,7 +7,7 @@ function NavItem({ text, active, setActiveTab, addressLoaded, idx }) {
       className={`${active ? "item-active" : "item-inactive"} ${
         !addressLoaded && idx !== 0 ? "item-disabled" : ""
       } my-auto nav-item d-flex justify-content-center`}
-      onClick={addressLoaded ? () => setActiveTab(text) : {}}
+      onClick={addressLoaded ? () => setActiveTab(text) : null}
     >
       <div className="py-2">{text}</div>
     </div>

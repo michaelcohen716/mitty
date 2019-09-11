@@ -1,5 +1,4 @@
 .App {
-  border: 1px solid orange;
   margin: auto;
   height: 100vh; 
   height: calc(var(--vh, 1vh) * 100);
@@ -34,7 +33,6 @@
 
 .main-body {
   overflow-y: scroll;
-  /* padding-bottom: 12px; */
 }
 
 
