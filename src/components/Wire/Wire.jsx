@@ -18,20 +18,26 @@ import {
   getEthToTokenInputPrice,
   ExchangeContract,
   TokenContract,
-  ROPSTEN_TTT_UNISWAP_EXCHANGE
+  ROPSTEN_TTT_UNISWAP_EXCHANGE,
+  checkApprovalAllowance,
+  approveERC20
 } from "../../services/uniswap";
+import clipboard from "../../assets/clipboard.png";
 import "./Wire.css";
 
 function Wire({
   mainnetERC20Balance,
   maticERC20Balance,
   address,
+  privateKey,
   getMainnetERC20Balance
 }) {
   const [mainnetETHBalance, setMainnetETHBalance] = useState("");
   const [exchangeAmount, setExchangeAmount] = useState("");
 
-  const [txHash, setTxHash] = useState("");
+  const [approvalAllowance, setApprovalAllowance] = useState("");
+  const [showApproval, toggleShowApproval] = useState(false);
+  const [approvalTxProcessing, toggleApprovalTxProcessing] = useState(false)
 
   const [txProcessing, toggleTxProcessing] = useState(false);
   const [txSuccess, toggleTxSuccess] = useState(false);
@@ -42,7 +48,12 @@ function Wire({
       console.log("mainnet eth bal", bal);
       setMainnetETHBalance(bal);
 
-      await getEthToTokenInputPrice(0.02);
+      const tokenAllowance = await checkApprovalAllowance(address);
+      console.log("tokenallow", tokenAllowance);
+      setApprovalAllowance(tokenAllowance);
+      if (Number(tokenAllowance) === 0) {
+        toggleShowApproval(true);
+      }
     };
     getMainnetEthBalance();
     pollBalances();
@@ -50,8 +61,12 @@ function Wire({
 
   const exchangeWithUniswap = async () => {
     toggleTxProcessing(true);
+    setInterval(() => {
+      toggleTxProcessing(false)
+    }, 3000)
     const amount = exchangeAmount;
-    const retVal = await ethForTestToken(amount);
+    const retVal = await ethForTestToken(amount, privateKey);
+    toggleTxSuccess(true)
     pollBalances();
   };
 
@@ -71,9 +86,20 @@ function Wire({
       return true;
     } else if (!exchangeAmount) {
       return true;
+    } else if (Number(approvalAllowance) === 0) {
+      return true;
     } else {
       return false;
     }
+  };
+
+  const copyAddress = () => {
+    navigator.clipboard.copy(address);
+  };
+
+  const uniswapApproveERC20 = async () => {
+    toggleApprovalTxProcessing(true);
+    await approveERC20(address, privateKey);
   };
 
   return (
@@ -82,6 +108,15 @@ function Wire({
         Note: The Moonpay test environment doesn't support Dai, so we'll need to
         buy ETH with Moonpay and exchange for Dai on Uniswap below. Allow
         several minutes for the Uniswap exchange to register in your balance.
+      </div>
+
+      <div className="d-flex mb-2 font-weight-bold">
+        <div>My address: {address.slice(0, 5) + "..." + address.slice(38)}</div>
+        <img
+          src={clipboard}
+          className="img-fluid clipboard ml-1 mt-1"
+          onClick={copyAddress}
+        />
       </div>
 
       <Balances
@@ -113,15 +148,43 @@ function Wire({
           <MiniLoading />
         </div>
       ) : txSuccess ? (
-        <div className="mt-3 success-text">
-          Your updated balance should be reflected shortly
+        <div className="d-flex flex-column">
+          <div className="mt-3 success-text">
+            Your updated balance should be reflected shortly
+          </div>
+          <a
+            className="tx-link mt-1"
+            target="_blank"
+            href="https://ropsten.etherscan.io/address/0xc4659c4dd66d1175d8b3c53b195911ad493bb2eb"
+          >
+            Track transaction here
+          </a>
         </div>
       ) : (
-        <SubmitButton
-          onClick={exchangeWithUniswap}
-          className="mt-1 mb-4"
-          disabled={isExchangeDisabled()}
-        />
+        <div className="d-flex">
+          <SubmitButton
+            onClick={exchangeWithUniswap}
+            className="mt-1 mb-4"
+            disabled={isExchangeDisabled()}
+            text="Submit"
+          />
+          {showApproval &&
+            (approvalTxProcessing ? (
+              <div className="success-text mt-2 ml-2">Check back shortly</div>
+            ) : (
+              <div className="d-flex">
+                <div className="approve-text ml-2">
+                  You'll need to approve Uniswap <br />
+                  before you can exchange
+                </div>
+                <SubmitButton
+                  className="ml-1"
+                  text="Approve"
+                  onClick={uniswapApproveERC20}
+                />
+              </div>
+            ))}
+        </div>
       )}
     </ViewHolder>
   );
