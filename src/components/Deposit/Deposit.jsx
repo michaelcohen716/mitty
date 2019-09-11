@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import SubmitButton from "../common/SubmitButton";
 import Balances from "../common/Balances";
 import MiniLoading from "../common/MiniLoading";
+import ViewHolder from "../common/ViewHolder";
+import GeneralInput from "../common/GeneralInput";
 import { _depositERC20 } from "../../services/matic";
 import "./Deposit.css";
 
@@ -47,9 +49,8 @@ function Deposit({
   };
 
   return (
-    <div className="d-flex flex-column deposit justify-content-start">
-      <div className="headline mb-3">Deposit Funds from Ethereum</div>
-      <div className="d-flex flex-column mt-2">
+    <ViewHolder headlineText="Deposit Funds from Ethereum">
+      <div className="d-flex flex-column">
         <Balances
           maticERC20Balance={maticERC20Balance}
           mainnetERC20Balance={mainnetERC20Balance}
@@ -57,11 +58,10 @@ function Deposit({
         <div className="mt-4 headline">
           How much Dai would you like to deposit to Matic?
         </div>
-        <input
-          value={depositAmount}
+        <GeneralInput
+          amount={depositAmount}
           onChange={e => setDepositAmount(e.target.value)}
-          className="no-background-input my-3"
-          placeholder="Deposit amount"
+          placeholder="Deposit Amount"
         />
         {txProcessing ? (
           <MiniLoading />
@@ -72,12 +72,12 @@ function Deposit({
             <SubmitButton
               onClick={depositERC20}
               disabled={isDepositDisabled()}
-              className="mt-1 mb-4 pb-5"
+              className="mt-1 mb-4"
             />
           </div>
         )}
       </div>
-    </div>
+    </ViewHolder>
   );
 }
 

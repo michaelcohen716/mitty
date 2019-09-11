@@ -123,14 +123,20 @@ function App() {
         height
       }}
     >
-      <div className="d-flex flex-column">
-        <div className="header d-flex ml-4 py-2">
-          <img src={paymentLogo} className="img-fluid payment-logo my-auto" />
-          <div className="mt-3 ml-2">Mitty</div>
-        </div>
-        <div className="main-body">{getView()}</div>
+      <div className="header d-flex">
+        <img
+          src={paymentLogo}
+          className="img-fluid payment-logo my-auto ml-4"
+        />
+        <div className="my-auto ml-2">Mitty</div>
       </div>
-      <Nav tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
+      {getView()}
+      <Nav
+        tabs={tabs}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        address={address}
+      />
     </div>
   );
 }

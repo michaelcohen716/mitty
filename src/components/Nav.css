@@ -5,6 +5,9 @@
 }
 
 .nav {
+  min-height: 6%;
+  max-height: 6%;
+  border: 1px solid magenta;
   border-top: 1px solid lightgray;
   flex-wrap: nowrap;
   overflow-x: scroll;
@@ -16,4 +19,8 @@
 
 .item-active {
   color: #0b132b;
+}
+
+.item-disabled {
+  color: rgba(211, 211, 211, 0.651);
 }

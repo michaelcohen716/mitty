@@ -25,3 +25,13 @@
   color: #0B132B;
   font-weight: bold;
 }
+
+.view-holder {
+  color: #73d2de;
+  padding: 0px 28px;
+  flex: 0 1 auto;
+  min-height: 84%;
+  max-height: 84%;
+  overflow-y: scroll;
+  padding-bottom: 8%;
+}

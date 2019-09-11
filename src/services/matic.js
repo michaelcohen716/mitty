@@ -10,7 +10,7 @@ const matic = new Matic({
   watcherUrl: config.WATCHER_URL
 });
 
-const token = "0x70459e550254b9d3520a56ee95b78ee4f2dbd846";
+export const token = "0x70459e550254b9d3520a56ee95b78ee4f2dbd846";
 const maticTestToken = "0xc82c13004c06E4c627cF2518612A55CE7a3Db699";
 
 // const token = "0x670568761764f53E6C10cd63b71024c31551c9EC" 

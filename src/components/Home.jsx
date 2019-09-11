@@ -1,6 +1,7 @@
 import React from "react";
 import SubmitButton from "./common/SubmitButton";
 import Balances from "./common/Balances";
+import ViewHolder from "./common/ViewHolder";
 import "./Home.css";
 
 function Home({
@@ -12,8 +13,7 @@ function Home({
   maticERC20Balance
 }) {
   return (
-    <div className="d-flex flex-column home justify-content-start">
-      <div className="headline mb-3">Home</div>
+    <ViewHolder headlineText="Home">
       {!accountLoaded ? (
         <div className="d-flex flex-column">
           <input
@@ -30,7 +30,7 @@ function Home({
           mainnetERC20Balance={mainnetERC20Balance}
         />
       )}
-    </div>
+    </ViewHolder>
   );
 }
 

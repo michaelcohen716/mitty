@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Balances from "../common/Balances";
 import SubmitButton from "../common/SubmitButton";
 import MiniLoading from "../common/MiniLoading";
+import ViewHolder from "../common/ViewHolder";
 import { _transferERC20 } from "../../services/matic";
 import "./Transfer.css";
 
@@ -41,8 +42,7 @@ function Transfer({ maticERC20Balance, pollMaticBalance, privateKey }) {
   };
 
   return (
-    <div className="d-flex flex-column transfer justify-content-start">
-      <div className="headline mb-3">Transfer Funds on Matic</div>
+    <ViewHolder headlineText="Transfer Funds on Matic">
       <div className="d-flex flex-column">
         <Balances maticERC20Balance={maticERC20Balance} hideMainnet={true} />
         <input
@@ -71,7 +71,7 @@ function Transfer({ maticERC20Balance, pollMaticBalance, privateKey }) {
           />
         )}
       </div>
-    </div>
+    </ViewHolder>
   );
 }
 
