@@ -17,8 +17,6 @@ const tabs = ["Home", "Deposit", "Transfer", "Wire"];
 
 // to-do:
 // replace icon
-// add liquidity to pool and add safeguards or a note telling user not to exch too much
-// readme
 // test whole flow
 
 /* 
@@ -35,7 +33,7 @@ function App() {
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
   // const [privateKey, setPrivateKey] = useState("");
-  const [privateKey, setPrivateKey] = useState(process.env.REACT_APP_TEST_PK1);
+  const [privateKey, setPrivateKey] = useState("EC6BA7DD9EB64A5BF6336D20E4046E80935BC574EC6F1C4ADF6AA9DA5A286C4C");
   const [accountLoaded, toggleAccountLoaded] = useState(false);
   const [address, setAddress] = useState("");
 
