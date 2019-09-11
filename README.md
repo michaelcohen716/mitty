@@ -90,6 +90,8 @@ Your home page simply displays your mainnet and Matic Dai balances.
 
 Nice!
 
+You'll also find the Withdraw functionality in this view. It's currently WIP.
+
 * Next, try transferring some Dai to a friend. You can transfer to any Ethereum address, regardless of whether the recipient has used Matic. The funds will be waiting for them.
 
 * This transaction is nearly instant, demonstrating the value and utility of Matic's L2 technology.
