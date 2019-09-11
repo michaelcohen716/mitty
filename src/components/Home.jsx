@@ -50,7 +50,6 @@ function Home({
           maticERC20Balance={maticERC20Balance}
           mainnetERC20Balance={mainnetERC20Balance}
         />
-        <div onClick={addLiquidity}>add liquidity</div>
         </>
       )}
     </ViewHolder>
