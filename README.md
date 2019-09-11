@@ -9,7 +9,7 @@ Mitty is a Progressive Web App (PWA), allowing the mobile app to be available *i
 
 ## Downloading Mitty
 
-You can download the repo and go through the steps below on your laptop, or navigate to [the deployed site here](https://mitty-app.now.sh/) and skip to [this step](#skip-step) to add to your home screen.
+You can download the repo and go through the steps below on your laptop, or navigate to [the deployed site here](https://mitty-app.now.sh/) from your mobile device and skip to [this step](#skip-step) to add to your home screen.
 
 * Clone this repo on a laptop or desktop
 * Run ```npm install``` 
