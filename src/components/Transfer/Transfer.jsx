@@ -68,6 +68,7 @@ function Transfer({ maticERC20Balance, pollMaticBalance, privateKey }) {
             onClick={transfer}
             disabled={isTransferDisabled()}
             className="mt-3"
+            text="Submit"
           />
         )}
       </div>

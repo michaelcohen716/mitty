@@ -1,68 +1,127 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Mitty 
+*The remittance app built on Matic*
 
-## Available Scripts
+Mitty is built on Matic's Layer 2 plasma chain to enable cheap, frictionless Dai transfers anywhere in the world. 
 
-In the project directory, you can run:
+Mitty is a Progressive Web App (PWA), allowing the mobile app to be available *immediately* on iOS and Android, leapfrogging the arduous App Store and Play Store approval processes. 
 
-### `npm start`
+>Note: On a short hackathon timeline, we only have the equipment to test downloading the PWA on Chrome via Android, but as of iOS 11.3 (pushed March, 2018), PWAs are compatible with all platforms.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Downloading Mitty
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* Clone this repo on a laptop or desktop
+* Run ```npm install``` 
+* Run ```npm run build```
+* Install the npm package ```serve``` running ```npm install -g serve``` 
+* Run ```serve -s build```
 
-### `npm test`
+You should see this view in your terminal
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![build view](./src/assets/servebuildview.png)
 
-### `npm run build`
+* Take out your mobile device and connect to the same wireless network as your laptop/desktop.
+* In your mobile browser, navigate to the IP address on your network
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You should see the Mitty home page
+<br/>
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+![home view](./src/assets/home.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/>
+Next, you'll need to add Mitty to your mobile device's home screen, accessible in the Settings menu.
 
-### `npm run eject`
+<br/>
+<br/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+![add to home](./src/assets/addtohomescreen.jpg)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Give Mitty a name (we would recommend 'Mitty', but the beauty of PWAs is that you can do whatever you want)
+<br/>
+<br/>
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![add name](./src/assets/addname.jpg)
 
-## Learn More
+<br/>
+Confirm!
+<br/>
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![add confirm](./src/assets/addconfirm.jpg)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br/>
 
-### Code Splitting
+And there it is. On your Home screen, just like any other app.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+<br/>
+<br/>
 
-### Analyzing the Bundle Size
+![home icon](./src/assets/icononhome.jpg)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
+## Using Mitty
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+Mitty v1 prioritizes privacy. We don't store any account or user information. In future versions, we may add wallet managers like Portis, Torus or Fortmatic, but right now, you'll need to enter your private key - only stored client-side - to begin using Mitty.
 
-### Advanced Configuration
+* Enter your private key to access the app (Mitty is only deployed on Ropsten, so we've incldued a preloaded test account to play around with)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Your home page simply displays your mainnet and Matic Dai balances.
+> Note: Given that this is a Ropsten deployment of Mitty, the [TTT Matic test token](https://ropsten.etherscan.io/token/0x70459e550254B9D3520a56eE95b78Ee4f2dbd846) is the substitute ERC20, used in place of Dai for testing purposes.
 
-### Deployment
+<br/>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+![home balance](./src/assets/homebalance.jpg)
 
-### `npm run build` fails to minify
+<br/>
+<br/>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* Click the Deposit tab below and send some Dai from Mainnet (Ropsten) to Matic. It may take a few moments, as this transaction occurs on the main Ethereum network with ~15 second block times.
+> Note: There may be a security warning at this point, but the app should function as expected
+
+<br/>
+
+![deposit](./src/assets/deposit.jpg)
+
+<br/>
+
+Nice!
+
+* Next, try transferring some Dai to a friend. You can transfer to any Ethereum address, regardless of whether the recipient has used Matic. The funds will be waiting for them.
+
+* This transaction is nearly instant, demonstrating the value and utility on Matic's L2 technology.
+
+<br/>
+
+![transfer](./src/assets/transfer.jpg)
+
+<br/>
+<br/>
+
+* Finally, we can buy ETH with Moonpay, which deposits the funds directly into our accounts in a matter of minutes.
+
+* You'll have to follow Moonpay's KYC process, conveniently embedded into Mitty with the Moonpay widget.
+
+* Test credit cards are available [here](https://www.moonpay.io/api_reference/v2/) under the 'Test Mode' section
+
+<br/>
+
+![moonpay](./src/assets/moonpay.jpg)
+
+<br/>
+<br/>
+
+For now, Moonpay's API only distributes ETH on Ropsten, and we're using DAI. To allow users to exchange their newly bought ETH for DAI/TTT, I deployed a [Uniswap exchange on Ropsten](https://ropsten.etherscan.io/address/0xc4659c4dd66d1175d8b3c53b195911ad493bb2eb) for the ETH/TTT pair and added some basic level of liquidity. 
+
+* Try exchanging some ETH for DAI through Mitty and Uniswap. The liquidity is still shallow so less than 1 ETH is preferred. And then given the network a couple minutes to confirm your exchange.
+
+<br/>
+
+![uniswap](./src/assets/exchangeuniswap.jpg)
+
+
+## To-Do
+
+* Give the option of managing identity in-app with a wallet manager or similar functionality
+* Withdrawing funds to bank account or PayPal (currently not possible on Moonpay, but on the near term roadmap)
+* Deployment to Mainnet!

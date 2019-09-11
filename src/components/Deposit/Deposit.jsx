@@ -73,6 +73,7 @@ function Deposit({
               onClick={depositERC20}
               disabled={isDepositDisabled()}
               className="mt-1 mb-4"
+              text="Submit"
             />
           </div>
         )}
