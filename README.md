@@ -89,7 +89,7 @@ Nice!
 
 * Next, try transferring some Dai to a friend. You can transfer to any Ethereum address, regardless of whether the recipient has used Matic. The funds will be waiting for them.
 
-* This transaction is nearly instant, demonstrating the value and utility on Matic's L2 technology.
+* This transaction is nearly instant, demonstrating the value and utility of Matic's L2 technology.
 
 <br/>
 
@@ -113,7 +113,9 @@ Nice!
 
 For now, Moonpay's API only distributes ETH on Ropsten, and we're using DAI. To allow users to exchange their newly bought ETH for DAI/TTT, I deployed a [Uniswap exchange on Ropsten](https://ropsten.etherscan.io/address/0xc4659c4dd66d1175d8b3c53b195911ad493bb2eb) for the ETH/TTT pair and added some basic level of liquidity. 
 
-* Try exchanging some ETH for DAI through Mitty and Uniswap. The liquidity is still shallow so less than 1 ETH is preferred. And then given the network a couple minutes to confirm your exchange.
+* Try exchanging some ETH for DAI through Mitty and Uniswap. The liquidity is still shallow so 0.5 ETH or less is preferred.
+
+Give the network a couple minutes to confirm your exchange. You should see the updated balance shortly.
 
 <br/>
 
@@ -123,5 +125,5 @@ For now, Moonpay's API only distributes ETH on Ropsten, and we're using DAI. To 
 ## To-Do
 
 * Give the option of managing identity in-app with a wallet manager or similar functionality
-* Withdrawing funds to bank account or PayPal (currently not possible on Moonpay, but on the near term roadmap)
-* Deployment to Mainnet!
+* Withdrawing funds to a bank account or PayPal (currently not possible on Moonpay, but on the near term roadmap)
+* Deploy to Mainnet!
