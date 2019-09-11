@@ -9,6 +9,8 @@ Mitty is a Progressive Web App (PWA), allowing the mobile app to be available *i
 
 ## Downloading Mitty
 
+You can download the repo and go through the steps below on your laptop, or navigate to [the deployed site here](https://mitty-app.now.sh/) and skip to [this step](#skip-step) to add to your home screen.
+
 * Clone this repo on a laptop or desktop
 * Run ```npm install``` 
 * Run ```npm run build```
@@ -27,6 +29,7 @@ You should see the Mitty home page
 
 ![home view](./src/assets/home.jpg)
 
+<div id="skip-step"/>
 <br/>
 Next, you'll need to add Mitty to your mobile device's home screen, accessible in the Settings menu.
 

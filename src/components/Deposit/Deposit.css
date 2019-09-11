@@ -28,3 +28,9 @@ input::placeholder {
   font-size: 12px;
 }
 
+.option-text {
+  font-size: 12px;
+  color: #EEBA0B;
+  margin-top: -15px;
+}
+
