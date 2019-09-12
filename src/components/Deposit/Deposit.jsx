@@ -174,7 +174,7 @@ function Deposit({
         />
         <div className="mt-4 headline">
           How much Dai would you like to{" "}
-          {isDepositState() ? "deposit to Matic?" : "withdraw from Ethereum"}
+          {isDepositState() ? "deposit to Matic?" : "withdraw to Ethereum"}
         </div>
         <GeneralInput
           amount={amount}
