@@ -38,6 +38,8 @@ Next, you'll need to add Mitty to your mobile device's home screen, accessible i
 
 ![add to home](./src/assets/addtohomescreen.jpg)
 
+> Note: On iOS, you'll likely need to press the 'Share' button on your browser to see the 'Add to Home Screen' functionality
+
 <br/>
 
 Give Mitty a name (we would recommend 'Mitty', but the beauty of PWAs is that you can do whatever you want)
