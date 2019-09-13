@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import firebase from "firebase";
 import SubmitButton from "../common/SubmitButton";
 import Balances from "../common/Balances";
 import MiniLoading from "../common/MiniLoading";
 import ViewHolder from "../common/ViewHolder";
 import GeneralInput from "../common/GeneralInput";
-import Countdown from "./Countdown";
+import WithdrawalItem from "./WithdrawalItem";
 import {
   _depositERC20,
   _startWithdrawERC20,
@@ -22,6 +23,50 @@ function Deposit({
   getMainnetERC20Balance,
   address
 }) {
+  const [withdrawalObjects, setWithdrawalObjects] = useState([]);
+  const [exitTx, toggleExitTx] = useState(false);
+
+  useEffect(() => {
+    const getDB = async () => {
+      await firebase
+        .database()
+        .ref(`/address/${address}/withdrawals`)
+        .on("value", snapshot => {
+          const val = snapshot.val();
+          const props = val ? Object.getOwnPropertyNames(val) : [];
+          const withdrawals = [];
+          for (var i = 0; i < props.length; i++) {
+            withdrawals.push(val[props[i]]);
+          }
+
+          setWithdrawalObjects(withdrawals);
+        });
+    };
+    getDB();
+  }, []);
+
+  // Withdraw firebase functions
+  const addWithdrawal = async txId => {
+    const withdrawalObject = {
+      state: "started",
+      txId,
+      amount,
+      timestamp: Date.now() / 1000
+    };
+    firebase
+      .database()
+      .ref(`/address/${address}/withdrawals`)
+      .push(withdrawalObject);
+
+    firebase
+      .database()
+      .ref(`/address/${address}/withdrawalIds/${txId}`)
+      .set({
+        status: "started",
+        timestamp: Date.now() / 1000
+      });
+  };
+
   const [amount, setAmount] = useState("");
   const [txProcessing, toggleTxProcessing] = useState(false);
   const [txSuccess, toggleTxSuccess] = useState(false);
@@ -30,7 +75,6 @@ function Deposit({
 
   const WITHDRAW_STAGES = ["Start", "Waiting", "Continue", "Exit", "Confirmed"];
   const [withdrawStage, setWithdrawStage] = useState(WITHDRAW_STAGES[0]);
-  const [withdrawTimeRemaining, setWithdrawTimeRemaining] = useState(5 * 60);
 
   const depositERC20 = async () => {
     toggleTxProcessing(true);
@@ -45,7 +89,7 @@ function Deposit({
   };
 
   const startWithdrawERC20 = async () => {
-    // toggleTxProcessing(true);
+    toggleTxProcessing(true);
 
     const withdrawAmount = amount * 10 ** 18;
     const retVal = await _startWithdrawERC20(
@@ -53,24 +97,20 @@ function Deposit({
       String(withdrawAmount)
     );
     setStartWithdrawTxHash(retVal.transactionHash);
+    await addWithdrawal(retVal.transactionHash);
 
-    pollMaticBalance();
-    setWithdrawStage(WITHDRAW_STAGES[1]);
     setTimeout(() => {
-      setWithdrawStage(WITHDRAW_STAGES[2]);
-    }, 1200 * 60 * 5); // adding a bit of extra time > 5 min to ensure existence of block header
-  };
-
-  const continueWithdrawERC20 = async () => {
-    const retVal = await _continueWithdrawERC0(privateKey, startWithdrawTxHash);
-    console.log("continue withdraw retval", retVal);
-    setWithdrawStage(WITHDRAW_STAGES[3]);
+      toggleTxProcessing(false);
+    }, 5000);
   };
 
   const processExit = async () => {
     const exit = await _processERC20Exit(privateKey);
     console.log("exit", exit);
-    setWithdrawStage(WITHDRAW_STAGES[4]);
+    toggleExitTx(true);
+    setTimeout(() => {
+      toggleExitTx(false);
+    }, 4000);
   };
 
   const runTxCompletion = () => {
@@ -110,49 +150,6 @@ function Deposit({
 
   const isDepositState = () => activeState === states[0];
 
-  const getWithdrawView = () => {
-    switch (withdrawStage) {
-      case WITHDRAW_STAGES[0]: {
-        return (
-          <SubmitButton
-            onClick={startWithdrawERC20}
-            disabled={isWithdrawDisabled()}
-            className="mt-1 mb-4"
-            text="Submit"
-          />
-        );
-      }
-      case WITHDRAW_STAGES[1]: {
-        return <Countdown />;
-      }
-      case WITHDRAW_STAGES[2]: {
-        return (
-          <SubmitButton
-            className="mt-1 mb-4"
-            text="Withdraw"
-            onClick={continueWithdrawERC20}
-          />
-        );
-      }
-      case WITHDRAW_STAGES[3]: {
-        return (
-          <SubmitButton
-            className="mt-1 mb-4"
-            text="Confirm"
-            onClick={processExit}
-          />
-        );
-      }
-      case WITHDRAW_STAGES[4]: {
-        return (
-          <div className="mt-4 success-text">
-            Your balance should be reflected soon
-          </div>
-        );
-      }
-    }
-  };
-
   return (
     <ViewHolder headlineText={isDepositState() ? states[0] : states[1]}>
       <div className="position-relative">
@@ -182,21 +179,66 @@ function Deposit({
           placeholder={isDepositState() ? "Deposit Amount" : "Withdraw Amount"}
         />
         {txProcessing ? (
-          <MiniLoading />
+          isDepositState() ? (
+            <MiniLoading />
+          ) : (
+            <div className="my-2 success-text">
+              You've started the withdrawal process <br />
+              Check back in 90 minutes
+            </div>
+          )
         ) : txSuccess ? (
           <div className="mt-3 success-text">Transaction Successful!</div>
         ) : (
-          <div className="pb-5 mb-5">
+          <div className="pb-2">
             {isDepositState() ? (
               <SubmitButton
                 onClick={depositERC20}
-                // onClick={isDepositState() ? depositERC20 : startWithdrawERC20}
                 disabled={isDepositDisabled()}
                 className="mt-1 mb-4"
                 text="Submit"
               />
+            ) : txProcessing ? (
+              <div className="mt-3 success-text">
+                You've started the withdrawal process <br />
+                Check back in 90 minutes
+              </div>
             ) : (
-              getWithdrawView()
+              <SubmitButton
+                onClick={startWithdrawERC20}
+                disabled={isWithdrawDisabled()}
+                className="mt-1 mb-4"
+                text="Submit"
+              />
+            )}
+          </div>
+        )}
+        {!isDepositState() && (
+          <div className="d-flex flex-column">
+            <div className="headline">Open Withdrawals</div>
+            {withdrawalObjects.map((w, i) => {
+              return (
+                <WithdrawalItem
+                  privateKey={privateKey}
+                  address={address}
+                  withdrawal={w}
+                  key={i}
+                />
+              );
+            })}
+            <div className="headline mt-3">Exits</div>
+            <div className="success-text mt-2">
+              You may have some withdrawals ready for exit <br />
+              Try exiting
+            </div>
+            {exitTx ? (
+              <div className="success-text mt-3">Exit is processing...</div>
+            ) : (
+              <SubmitButton
+                className="mt-3"
+                onClick={processExit}
+                text="Exit"
+              />
             )}
           </div>
         )}
