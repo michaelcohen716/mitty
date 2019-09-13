@@ -96,7 +96,7 @@ You'll also find the Withdraw functionality in this view. It's currently WIP.
 Firebase stores ongoing transaction hashes by address to identify whether a withdrawal process is ready to proceed.
 <br/>
 
-![withdraw](./src/assets/withdrawandexit.jpg)
+![withdraw](./src/assets/withdrawandexit.png)
 
 * Next, try transferring some Dai to a friend. You can transfer to any Ethereum address, regardless of whether the recipient has used Matic. The funds will be waiting for them.
 
