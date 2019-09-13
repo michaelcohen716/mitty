@@ -13,6 +13,8 @@ import {
 import { _getMaticERC20Balance } from "./services/matic";
 import "./App.css";
 
+import * as firebase from "firebase/app";
+
 const tabs = ["Home", "Deposit", "Transfer", "Wire"];
 
 // to-do:
@@ -23,7 +25,8 @@ const tabs = ["Home", "Deposit", "Transfer", "Wire"];
 
 /* 
 Noun Project Credits
-- payment By Sergey Demushkin, RU   
+- payment By Sergey Demushkin, RU  
+- Arrow by TAQRIB ICON from the Noun Project
 */
 
 let vh = window.innerHeight * 0.01;
@@ -31,6 +34,21 @@ let vh = window.innerHeight * 0.01;
 document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 function App() {
+  useEffect(() => {
+    var firebaseConfig = {
+      apiKey: "AIzaSyBjqsQ2WRhoFI7UcBr0zRouIjoI_VrtegE",
+      authDomain: "mitty-5c470.firebaseapp.com",
+      databaseURL: "https://mitty-5c470.firebaseio.com",
+      projectId: "mitty-5c470",
+      storageBucket: "mitty-5c470.appspot.com",
+      messagingSenderId: "168242285453",
+      appId: "1:168242285453:web:61b06d87bfbf2d3aee0bc4"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  }, [])
+
+
   const { height, width } = useWindowDimensions();
   const [activeTab, setActiveTab] = useState(tabs[0]);
 
