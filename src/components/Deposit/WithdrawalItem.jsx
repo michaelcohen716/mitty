@@ -18,13 +18,11 @@ function WithdrawalItem({
         .database()
         .ref(`/address/${address}/withdrawalIds/${txId}`)
         .on("value", snapshot => {
-          console.log("snapshot", snapshot.val());
           setStatusObj(snapshot.val());
         });
     };
     getStatus();
   }, []);
-  console.log("statusobj", statusObj)
 
   const readyTime = timestamp + 90 * 60;
   const rightNow = Date.now() / 1000;
@@ -44,15 +42,10 @@ function WithdrawalItem({
         timestamp: Date.now() / 1000
       });
     const retVal = await _continueWithdrawERC0(privateKey, txId);
-    console.log("continue withdraw retval", retVal);
   };
 
-  const processExit = async() => {
-    // 
-  }
-
   const getView = () => {
-    if (timestamp + 90 * 60 > rightNow && statusObj.status === "started") {
+      if (timestamp + 90 * 60 < rightNow && statusObj.status === "started") {
       // can press continue
       return (
         <div className="d-flex" onClick={continueWithdrawERC20}>
@@ -76,13 +69,19 @@ function WithdrawalItem({
           </div>
         );
       } else {
-        return (
-          <div className="font-weight-bold">
-            {since.toFixed(0)} min to withdraw
-          </div>
-        )
+        return <div className="font-weight-bold">Exit momentarily</div>;
       }
     }
+
+    if(since < 0 && statusObj.status === "continued"){
+      return (
+        <div className="font-weight-bold">Exited</div>
+      );
+    }
+
+    return (
+      <div className="font-weight-bold">{since.toFixed(0)} min to withdraw</div>
+    );
   };
 
   return (
@@ -102,9 +101,7 @@ function WithdrawalItem({
           {Number(amount).toFixed(2)}
         </div>
       </div>
-      <div className="ml-2">
-        {getView()}
-      </div>
+      <div className="ml-2">{getView()}</div>
     </div>
   );
 }
