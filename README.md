@@ -82,6 +82,8 @@ Your home page simply displays your mainnet and Matic Dai balances.
 <br/>
 
 * Click the Deposit tab below and send some Dai from Mainnet (Ropsten) to Matic. It may take a few moments, as this transaction occurs on the main Ethereum network with ~15 second block times.
+> Note: You'll need a small amount of ether in your account for the deposit transaction to be successful
+
 > Note: There may be a security warning at this point, but the app should function as expected
 
 <br/>
